@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-//if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
 	# code...
-//	header('location: login.php');
-//	exit();
-//}
+	header('location: login.php');
+	exit();
+}
 
 		include('../includes/db_connect.php');
 
