@@ -1,5 +1,5 @@
 <?php
-session_start();
+/*session_start();
 
 if (!isset($_SESSION['user_id'])) {
 	# code...
@@ -106,6 +106,51 @@ body{
 		</tr>
 	</table>
 </div>
+</div>
+</body>
+</html>*/
+
+//connect to database
+
+include('../includes/db_connect.php');
+
+$query=$db->prepare("SELECT post_id,title,LEFT(body,100)AS body,category
+ FROM posts INNER JOIN categories ON categories.category_id=posts.category_id order by post_id");
+$query->execute();
+
+$query->bind_result($post_id,$title,$body,$category);
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.in.js"></script>
+
+	<title> Index file</title>
+</head>
+<style type="text/css">
+	#container{
+		margin: auto;
+		width: 800px;
+
+	}
+</style>
+<body>
+<div id="container">
+<?php
+while($query->fetch());
+$lastspace=strpos($body,'');
+	?>
+	<article>
+	<h2><?php echo $title?></h2>
+	<p><?php echo substr($body,,$lastspace)."<a href='post.php?id=$post_id'>..</a>"?></p>
+	<p>Category:<?php echo $category ?></p>
+	</article>
+<?php endwhile ?>
 </div>
 </body>
 </html>
